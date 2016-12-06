@@ -6,10 +6,18 @@ module.exports = {
 
   included(app) {
     this._super.included(app);
-    app.import(app.bowerDirectory + '/swiper/dist/css/swiper.min.css');
+    
+    var importContext;
+    if (this.import) {
+      importContext = this;
+    } else {
+      importContext = this._findHostForLegacyEmberCLI();
+    }
+    
+    importContext.import(app.bowerDirectory + '/swiper/dist/css/swiper.min.css');
 
     if (!process.env.EMBER_CLI_FASTBOOT) {
-      app.import(app.bowerDirectory + '/swiper/dist/js/swiper.min.js');
+      importContext.import(app.bowerDirectory + '/swiper/dist/js/swiper.min.js');
     }
   }
 
