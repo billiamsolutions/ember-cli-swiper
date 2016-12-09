@@ -4,8 +4,14 @@
 module.exports = {
   name: 'ember-cli-swiper',
 
-  included(app) {
-    this._super.included.call(this, app);
+  included(app, parentAddon) {
+    // Quick fix for add-on nesting
+    // https://github.com/aexmachina/ember-cli-sass/blob/v5.3.0/index.js#L73-L75
+    // see: https://github.com/ember-cli/ember-cli/issues/3718
+    while (typeof app.import !== 'function' && (app.app || app.parent)) {
+        app = app.app || app.parent;
+    }
+    this._super.included.call(this, app, parentAddon);
     
     var importContext;
     if (this.import) {
