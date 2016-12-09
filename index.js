@@ -19,6 +19,20 @@ module.exports = {
     if (!process.env.EMBER_CLI_FASTBOOT) {
       importContext.import(app.bowerDirectory + '/swiper/dist/js/swiper.min.js');
     }
-  }
+  },
+  
+  // included from https://git.io/v6F7n
+  // not needed for ember-cli > 2.7
+  _findHostForLegacyEmberCLI: function() {
+    var current = this;
+    var app;
 
+    // Keep iterating upward until we don't have a grandparent.
+    // Has to do this grandparent check because at some point we hit the project.
+    do {
+      app = current.app || app;
+    } while (current.parent.parent && (current = current.parent));
+
+    return app;
+  }
 };
