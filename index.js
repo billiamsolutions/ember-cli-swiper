@@ -5,7 +5,7 @@ module.exports = {
   name: 'ember-cli-swiper',
 
   included(app) {
-    this._super.included(app);
+    this._super.included.call(this, app);
     
     var importContext;
     if (this.import) {
